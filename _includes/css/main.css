@@ -171,7 +171,7 @@ nav ul li:hover, nav ul li.active {
   width:100%;
   min-height:300px;
   padding:210px 0;
-  background:url(img/bgnoise.png);
+  background:url({{ site.baseurl }}/img/bgnoise.png);
   /* generated noise from noisetexturegenerator.com */
 }
 
@@ -460,7 +460,7 @@ nav ul li:hover, nav ul li.active {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
-        background-image: url("/img/bg-full.jpg"); /* fallback */
+        background-image: url({{ site.baseurl }}/img/bg-full.jpg); /* fallback */
     }
 }
 
@@ -469,7 +469,7 @@ nav ul li:hover, nav ul li.active {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
-        background-image: url("/img/bg-half.jpg"); /* fallback */
+        background-image: url({{ site.baseurl }}/img/bg-half.jpg); /* fallback */
     }
 }
 
@@ -478,7 +478,7 @@ nav ul li:hover, nav ul li.active {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
-        background-image: url("/img/bg-small.jpg"); /* fallback */
+        background-image: url({{ site.baseurl }}/img/bg-small.jpg); /* fallback */
     }
 }
 

@@ -15,6 +15,7 @@ OUTPUT_PROTOCOL = mrjob.protocol.RawProtocol
 HADOOP_OUTPUT_FORMAT = 'nicknack.MultipleValueOutputFormat'
 {% endhighlight %}
 
+<div class="spacer"></div>
 
 ## MultipleValueOutputFormat
 
