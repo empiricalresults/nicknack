@@ -1,0 +1,16 @@
+jekyll:
+  build: .
+  volumes:
+    - .:/site
+  working_dir: /site
+  entrypoint: jekyll
+
+web:
+  build: .
+  volumes:
+    - .:/site
+  ports:
+    - "4000:4000"
+  working_dir: /site
+  command: jekyll serve -H 0.0.0.0 -P 4000 --force_polling
+
