@@ -15,5 +15,5 @@ See also:
 
 ## Documentation
 
-See [here](http://nicknack.github.io)
+See [here](http://empiricalresults.github.io/nicknack/).
 
