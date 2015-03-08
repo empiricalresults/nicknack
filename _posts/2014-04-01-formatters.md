@@ -67,22 +67,22 @@ yield "otherfile", json.dumps({"other values": "more JSON"})
 Hadoop Input:
 
 {% highlight text %}
-filename1\t{"some values": "other JSON"}
-otherfile\t{"other values": "more JSON"}
+filename1	{"some values": "other JSON"}
+otherfile	{"other values": "more JSON"}
 {% endhighlight %}
 
 
 Output in *[outputdir]/filename1/part-00000*:
 
 {% highlight text %}
-filename1\t{"some values": "other JSON"}
+filename1	{"some values": "other JSON"}
 {% endhighlight %}
 
 
 Output in *[outputdir]/otherfile/part-00000*
 
 {% highlight text %}
-otherfile\t{"other values": "more JSON"}
+otherfile	{"other values": "more JSON"}
 {% endhighlight %}
 
 <div class="spacer"></div>
@@ -106,20 +106,20 @@ yield "dirname2 key2", json.dumps({"other values": "more JSON"})
 Hadoop Input:
 
 {% highlight text %}
-dirname1 key1\t{"some values": "other JSON"}
-dirname2 key2\t{"other values": "more JSON"}
+dirname1 key1	{"some values": "other JSON"}
+dirname2 key2	{"other values": "more JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname1/part-00000*:
 
 {% highlight text %}
-key1\t{"some values": "other JSON"}
+key1	{"some values": "other JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname2/part-00000*
 
 {% highlight text %}
-key2\t{"other values": "more JSON"}
+key2	{"other values": "more JSON"}
 {% endhighlight %}
 
 <div class="spacer"></div>
@@ -141,20 +141,20 @@ yield json.dumps(["dirname2", "key2"]), json.dumps({"other values": "more JSON"}
 Hadoop Input:
 
 {% highlight text %}
-["dirname1", "key1"]\t{"some values": "other JSON"}
-["dirname2", "key2"]\t{"other values": "more JSON"}
+["dirname1", "key1"]	{"some values": "other JSON"}
+["dirname2", "key2"]	{"other values": "more JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname1/part-00000*:
 
 {% highlight text %}
-key1\t{"some values": "other JSON"}
+key1	{"some values": "other JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname2/part-00000*
 
 {% highlight text %}
-key2\t{"other values": "more JSON"}
+key2	{"other values": "more JSON"}
 {% endhighlight %}
 
 <div class="spacer"></div>
@@ -181,20 +181,20 @@ yield "dirname2,key2", json.dumps({"other values": "more JSON"})
 Hadoop Input:
 
 {% highlight text %}
-dirname1,key1\t{"some values": "other JSON"}
-dirname2,key2\t{"other values": "more JSON"}
+dirname1,key1	{"some values": "other JSON"}
+dirname2,key2	{"other values": "more JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname1/part-00000*:
 
 {% highlight text %}
-key1\t{"some values": "other JSON"}
+key1	{"some values": "other JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/dirname2/part-00000*
 
 {% highlight text %}
-key2\t{"other values": "more JSON"}
+key2	{"other values": "more JSON"}
 {% endhighlight %}
 
 <div class="spacer"></div>
@@ -219,8 +219,8 @@ yield "otherpath/filename", json.dumps({"other values": "more JSON"})
 Hadoop Input:
 
 {% highlight text %}
-full/filename\t{"some values": "other JSON"}
-otherpath/filename\t{"other values": "more JSON"}
+full/filename	{"some values": "other JSON"}
+otherpath/filename	{"other values": "more JSON"}
 {% endhighlight %}
 
 Output in *[outputdir]/full/filename*:
