@@ -1,4 +1,4 @@
-package com.er.hadoop;
+package nicknack;
 
 import org.apache.commons.math3.util.Pair;
 import org.junit.Before;

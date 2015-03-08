@@ -1,9 +1,8 @@
-package com.er.hadoop;
+package nicknack;
 
 
 import org.apache.commons.math3.util.Pair;
 import org.apache.hadoop.io.Text;
-import org.codehaus.jettison.json.JSONArray;
 import org.junit.Test;
 
 import java.util.ArrayList;

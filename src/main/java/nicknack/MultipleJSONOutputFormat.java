@@ -1,4 +1,4 @@
-package com.er.hadoop;
+package nicknack;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -6,8 +6,13 @@ import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 
-
-public class MultipleSimpleOutputFormat extends MultipleTextOutputFormat<Text, Text> {
+/**
+ * Writes to the directories specified by the first element in the key.
+ * The output key of your job must be a JSON formatted array.  The first element
+ * will be used as the subdirectory, and the second element will be used for key
+ * written to the file.
+ */
+public class MultipleJSONOutputFormat extends MultipleTextOutputFormat<Text, Text> {
 
     /**
      * Generate the file output file name based on the given key and the leaf file
@@ -25,7 +30,13 @@ public class MultipleSimpleOutputFormat extends MultipleTextOutputFormat<Text, T
      */
     @Override
     protected String generateFileNameForKeyValue(Text key, Text value, String name) {
-        return new Path(key.toString().split(" ")[0], name).toString();
+        JSONArray array;
+        try {
+            array = new JSONArray(key.toString());
+            return new Path(array.getString(0), name).toString();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -43,7 +54,12 @@ public class MultipleSimpleOutputFormat extends MultipleTextOutputFormat<Text, T
      */
     @Override
     protected Text generateActualKey(Text key, Text value) {
-        return new Text(key.toString().split(" ")[1]);
+        JSONArray array;
+        try {
+            array = new JSONArray(key.toString());
+            return new Text(array.getString(1));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
-
 }

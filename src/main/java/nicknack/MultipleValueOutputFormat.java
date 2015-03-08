@@ -1,4 +1,4 @@
-package com.er.hadoop;
+package nicknack;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
