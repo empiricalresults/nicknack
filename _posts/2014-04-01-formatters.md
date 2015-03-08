@@ -7,12 +7,12 @@ fa-icon: magic
 
 To use a Nick Nack formatter you must set both the [OUTPUT_PROTOCOL](https://pythonhosted.org/mrjob/guides/writing-mrjobs.html#job-protocols)
 and the [HADOOP_OUTPUT_FORMAT](https://pythonhosted.org/mrjob/job.html#mrjob.job.MRJob.HADOOP_OUTPUT_FORMAT) fields in your class definition.
-The package name for all the Nick Nack formatters is *com.er.hadoop*, so prefix the formatter
+The package name for all the Nick Nack formatters is *nicknack*, so prefix the formatter
 name with this.  For example, to use the MultipleValueOutputFormat formatter, your class should have:
 
 {% highlight python %}
 OUTPUT_PROTOCOL = mrjob.protocol.RawProtocol
-HADOOP_OUTPUT_FORMAT = 'com.er.hadoop.MultipleValueOutputFormat'
+HADOOP_OUTPUT_FORMAT = 'nicknack.MultipleValueOutputFormat'
 {% endhighlight %}
 
 
