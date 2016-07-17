@@ -1,4 +1,5 @@
-
+---
+---
 $.extend($.easing,
 {
     def: 'easeOutQuad',

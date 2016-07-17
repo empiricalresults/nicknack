@@ -6,8 +6,8 @@ safe: false
 
 
 ### site serving configuration ###
-exclude: [CNAME, README.md, .gitignore, Dockerfile, fig.yml]
-permalink: / ## disables post output
+exclude: [CNAME, README.md, .gitignore, Dockerfile, docker-compose.yml]
+#permalink: / ## disables post output
 timezone: null
 lsi: false
 markdown: kramdown
@@ -16,7 +16,7 @@ kramdown:
 
 baseurl: /nicknack
 
-highlighter: pygments
+highlighter: rogue
 
 
 ### content configuration ###

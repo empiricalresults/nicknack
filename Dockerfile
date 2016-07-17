@@ -16,7 +16,7 @@ RUN curl -SLO "https://bootstrap.pypa.io/get-pip.py" \
 RUN pip install Pygments
 
 # ruby deps
-RUN gem install github-pages:33
+RUN gem install github-pages:87
 
 RUN mkdir /site
 WORKDIR /site

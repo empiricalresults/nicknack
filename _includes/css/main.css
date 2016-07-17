@@ -16,7 +16,7 @@ html { box-sizing: border-box; }
 
 /* ----- per-post colors! ----- */
 {% for node in site.posts %}
-  {% capture id %}{{ node.id | remove:'/' | downcase }}{% endcapture %}
+  {% capture id %}{{ node.title | downcase }}{% endcapture %}
   {% capture bg %}{% if site.colors[node.bg] %}{{ site.colors[node.bg] }}{% else %}{{ node.bg }}{% endif %}{% endcapture %}
   {% capture fg %}{% if site.colors[node.color] %}{{ site.colors[node.color] }}{% else %}{{ node.color }}{% endif %}{% endcapture %}
   nav .p-{{id}} { border-color: {{ bg }}; }
@@ -432,7 +432,7 @@ nav ul li:hover, nav ul li.active {
     border-left-color: #ce4844;
 }
 
-#intro h1 {
+#home h1 {
     font-family: 'Fredoka One', cursive;
     font-size: 400%;
     line-height: 125%;
@@ -446,7 +446,7 @@ nav ul li:hover, nav ul li.active {
     -o-transform: rotate(-5deg);
 }
 
-#intro h3 {
+#home h3 {
     font-family: 'Fredoka One', cursive;
     font-size: 200%;
     line-height: 125%;
@@ -456,7 +456,7 @@ nav ul li:hover, nav ul li.active {
 }
 
 @media screen and (min-width:1920px) {
-    #intro {
+    #home {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
@@ -465,7 +465,7 @@ nav ul li:hover, nav ul li.active {
 }
 
 @media screen and (min-width:1300px) {
-    #intro {
+    #home {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
@@ -474,7 +474,7 @@ nav ul li:hover, nav ul li.active {
 }
 
 @media screen and (min-width:600px) {
-    #intro {
+    #home {
         background-size: cover;
         opacity: 0.85;
         filter: alpha(opacity=85); /* For IE8 and earlier */
@@ -532,4 +532,3 @@ nav ul li:hover, nav ul li.active {
         box-sizing: content-box;
     }
 }
-
