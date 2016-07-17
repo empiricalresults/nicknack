@@ -6,7 +6,7 @@ safe: false
 
 
 ### site serving configuration ###
-exclude: [CNAME, README.md, .gitignore, Dockerfile, docker-compose.yml]
+exclude: [CNAME, README.md, .gitignore, Dockerfile, docker-compose.yml, nicknack.iml]
 #permalink: / ## disables post output
 timezone: null
 lsi: false
@@ -16,12 +16,12 @@ kramdown:
 
 baseurl: /nicknack
 
-highlighter: rogue
+highlighter: rouge
 
 
 ### content configuration ###
-title:       "Nick Nack: mrjob extras"
-keywords:    "mrjob, hadoop, multiple output"
+title:       "Nick Nack: mrjob + Hadoop streaming extras"
+keywords:    "mrjob, hadoop, hadoop streaming, multiple output"
 description: "A library of mrjob extras to make hadoop do what you want"
 source_link: "https://github.com/empiricalresults/nicknack"
 favicon:     #put a path like: "img/favicon.ico"
@@ -42,4 +42,3 @@ colors:
   section2:  '#656256'
   section3:  '#9EBC9F'
   section4:  '#F4F2F3'
-  
