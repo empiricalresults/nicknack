@@ -1,4 +1,4 @@
-FROM ruby:2.1
+FROM ruby:2.2
 
 # python is already installed (via ruby dep i think)
 
