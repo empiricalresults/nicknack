@@ -4,7 +4,6 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.KeyValueTextInputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.commons.logging.LogFactory;
@@ -37,12 +36,11 @@ public class ManifestTextInputFormat extends KeyValueTextInputFormat {
     protected FileStatus[] listStatus(JobConf job) throws IOException {
         FileStatus[] manifests = super.listStatus(job);
         ArrayList<FileStatus> allFileStatuses = new ArrayList<FileStatus>();
-        ArrayList<Path> allPaths = new ArrayList<Path>();
         for (FileStatus manifest : manifests) {
-            allPaths.addAll(manifestPaths(manifest.getPath(), job));
-        }
-        for (Path path : allPaths) {
-            allFileStatuses.addAll(expandPath(path, job));
+            allFileStatuses.addAll(expandManifest(manifest.getPath(), job));
+            if (allFileStatuses.size() % 10007 == 0) {
+                log.info("Processed " + allFileStatuses.size() + " input paths so far.");
+            }
         }
         log.info("Total input paths from manifest : " + allFileStatuses.size());
         return allFileStatuses.toArray(new FileStatus[0]);
@@ -56,18 +54,19 @@ public class ManifestTextInputFormat extends KeyValueTextInputFormat {
      *          the JobConf object for this job
      * @return an ArrayList of Path objects, one for each line in the given manifest file
      */
-    private ArrayList<Path> manifestPaths(Path manifest, JobConf job) throws IOException {
+    private ArrayList<FileStatus> expandManifest(Path manifest, JobConf job) throws IOException {
         FileSystem fs = manifest.getFileSystem(job);
         FSDataInputStream stream = fs.open(manifest);
         BufferedReader buf = new BufferedReader(new InputStreamReader(stream));
-        ArrayList<Path> paths = new ArrayList<Path>();
+        ArrayList<FileStatus> fileStatuses = new ArrayList<FileStatus>();
+
         String line = buf.readLine();
         while (line != null) {
             Path p = new Path(line);
-            paths.add(p);
+            fileStatuses.addAll(expandPath(p, job));
             line = buf.readLine();
         }
-        return paths;
+        return fileStatuses;
     }
 
     /**
