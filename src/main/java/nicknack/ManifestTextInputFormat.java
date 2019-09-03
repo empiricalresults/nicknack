@@ -4,7 +4,6 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.KeyValueTextInputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.commons.logging.LogFactory;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 
 /**
  * Manifest files are inputs with a list of paths to use as the real input.
- * 
+ *
  * Paths may be directories, globs, or files and will be expanded appropriately.
  * Unlike most InputFormats, this class will silently ignore missing and
  * unmatched paths in the manifest file.
@@ -35,17 +34,16 @@ public class ManifestTextInputFormat extends KeyValueTextInputFormat {
      */
     @Override
     protected FileStatus[] listStatus(JobConf job) throws IOException {
-	FileStatus[] manifests = super.listStatus(job);
-	ArrayList<FileStatus> allFileStatuses = new ArrayList<FileStatus>();
-	ArrayList<Path> allPaths = new ArrayList<Path>();
-	for (FileStatus manifest : manifests) {
-	    allPaths.addAll(manifestPaths(manifest.getPath(), job));
-	}
-	for (Path path : allPaths) {
-	    allFileStatuses.addAll(expandPath(path, job));
-	}
-	log.info("Total input paths from manifest : " + allFileStatuses.size());
-	return allFileStatuses.toArray(new FileStatus[0]);
+        FileStatus[] manifests = super.listStatus(job);
+        ArrayList<FileStatus> allFileStatuses = new ArrayList<FileStatus>();
+        for (FileStatus manifest : manifests) {
+            allFileStatuses.addAll(expandManifest(manifest.getPath(), job));
+            if (allFileStatuses.size() % 10007 == 0) {
+                log.info("Processed " + allFileStatuses.size() + " input paths so far.");
+            }
+        }
+        log.info("Total input paths from manifest : " + allFileStatuses.size());
+        return allFileStatuses.toArray(new FileStatus[0]);
     }
 
     /**
@@ -56,20 +54,21 @@ public class ManifestTextInputFormat extends KeyValueTextInputFormat {
      *          the JobConf object for this job
      * @return an ArrayList of Path objects, one for each line in the given manifest file
      */
-    private ArrayList<Path> manifestPaths(Path manifest, JobConf job) throws IOException {
-	FileSystem fs = manifest.getFileSystem(job);
-	FSDataInputStream stream = fs.open(manifest);
-	BufferedReader buf = new BufferedReader(new InputStreamReader(stream));
-	ArrayList<Path> paths = new ArrayList<Path>();
-	String line = buf.readLine();
-	while (line != null) {
-	    Path p = new Path(line);
-	    paths.add(p);
-	    line = buf.readLine();
-	}
-	return paths;
+    private ArrayList<FileStatus> expandManifest(Path manifest, JobConf job) throws IOException {
+        FileSystem fs = manifest.getFileSystem(job);
+        FSDataInputStream stream = fs.open(manifest);
+        BufferedReader buf = new BufferedReader(new InputStreamReader(stream));
+        ArrayList<FileStatus> fileStatuses = new ArrayList<FileStatus>();
+
+        String line = buf.readLine();
+        while (line != null) {
+            Path p = new Path(line);
+            fileStatuses.addAll(expandPath(p, job));
+            line = buf.readLine();
+        }
+        return fileStatuses;
     }
-    
+
     /**
      * Expand a path to FileStatuses of:
      *  - the contents if a directory
@@ -82,20 +81,20 @@ public class ManifestTextInputFormat extends KeyValueTextInputFormat {
      * @return an ArrayList of FileStatus objects, expanded from the line from the manifest
      */
     private ArrayList<FileStatus> expandPath(Path path, JobConf job) throws IOException {
-	FileSystem fs = path.getFileSystem(job);
-	FileStatus[] matches = fs.globStatus(path);
-	if (matches == null) {
-	    return new ArrayList<FileStatus>();
-	}
-	ArrayList<FileStatus> expanded = new ArrayList<FileStatus>();
-	for (FileStatus match : matches) {
-	    if (match.isDir()) {
-		expanded.addAll(Arrays.asList(fs.listStatus(match.getPath())));
-	    } else {
-		expanded.add(match);
-	    }
-	}
-	return expanded;
+        FileSystem fs = path.getFileSystem(job);
+        FileStatus[] matches = fs.globStatus(path);
+        if (matches == null) {
+            return new ArrayList<FileStatus>();
+        }
+        ArrayList<FileStatus> expanded = new ArrayList<FileStatus>();
+        for (FileStatus match : matches) {
+            if (match.isDir()) {
+                expanded.addAll(Arrays.asList(fs.listStatus(match.getPath())));
+            } else {
+                expanded.add(match);
+            }
+        }
+        return expanded;
     }
-    
+
 }
